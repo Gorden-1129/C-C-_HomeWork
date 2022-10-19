@@ -50,24 +50,33 @@ bool ListInsert(LinkList &L, int index, ElemType data)
 ElemType ListGet(LinkList &L, int index)
 {
   LNode *p = GetPreviousLinkList(L, index);
+  if (p == NULL || p->next == NULL)
+  {
+    return NULL;
+  }
   return p->next->data;
+  // return true;
 }
 
 bool ListChange(LinkList &L, int index, ElemType data)
 {
   LNode *p = GetPreviousLinkList(L, index);
-  LNode *s = (LNode *)malloc(sizeof(LNode));
+  if (p == NULL)
+  {
+    return false;
+  }
   LNode *q = p->next;
-  s->data = data;
-  s->next = q->next;
-  p->next = s;
-  free(q);
+  q->data = data;
   return true;
 }
 
 bool ListDel(LinkList &L, int index)
 {
   LNode *p = GetPreviousLinkList(L, index);
+  if (p == NULL)
+  {
+    return false;
+  }
   LNode *q = p->next;
   p->next = q->next;
   free(q);
@@ -85,7 +94,8 @@ void showList(LinkList L)
 
 int main()
 {
-  auto L = (LinkList)malloc(sizeof(LNode));
+  printf("%d", 1);
+  LinkList L = (LinkList)malloc(sizeof(LNode));
 
   std::cout << "list insert:" << std::endl;
   for (int i = 0; i < len_tot; i++)
